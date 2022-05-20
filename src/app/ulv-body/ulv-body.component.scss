@@ -1,0 +1,32 @@
+.demo-table {
+    width: 100%;
+  }
+
+th {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+td {
+    cursor: pointer;
+}
+
+.itemInput {
+    width: 100%;
+}
+
+.container-all {
+    width: 100%;
+}
+
+.container-left {
+    width: calc(70% - 8px);
+    margin: 4px;
+    float: left;
+}
+
+.container-right {
+    width: calc(30% - 8px);
+    margin: 4px;
+    float: right;
+}

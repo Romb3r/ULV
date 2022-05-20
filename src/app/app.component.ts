@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ULV2.0';
+
+  checkURL(): string {
+    return window.location.pathname
+  }
 }
