@@ -1,8 +1,19 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 <app-ulv-header>
 </app-ulv-header>
+
 <app-ulv-body *ngIf="checkURL() == '/'">
 </app-ulv-body>
+
 <app-ulv-places *ngIf="checkURL() == '/places'">
 </app-ulv-places>
+
 <app-ulv-cart *ngIf="checkURL() == '/cart'">
 </app-ulv-cart>
+
+<footer class="bg-light text-center text-lg-start" style="position: fixed; width: 100%; bottom: 0%; height: 50px; padding: 10px, 10px, 0px, 10px;">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2022 Copyright: ULV NoM.
+    </div>
+</footer>
