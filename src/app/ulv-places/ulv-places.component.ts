@@ -6,11 +6,7 @@ export interface Place {
   name: string
 };
 
-const items: Place[] = [
-  {name: "Kühlschrank"},
-  {name: "Froster"},
-  {name: "Regal"}
-]
+
 
 @Component({
   selector: 'app-ulv-places',
@@ -18,13 +14,17 @@ const items: Place[] = [
   styleUrls: ['./ulv-places.component.scss']
 })
 export class UlvPlacesComponent implements OnInit, AfterViewInit {
-  public tableHeaders: string[] = ["place"];
-  public places: string[] = ["Kühlschrank", "Froster", "Regal"];
+  public places: Place[] = [
+    {name: "Kühlschrank"},
+    {name: "Froster"},
+    {name: "Regal"}
+  ]
+  public tableHeaders: string[] = ["place", " "];
   public placeName: string = "";
   public tableIndex: number;
   public edit: boolean;
   public rowSelected: number;
-  dataSource = new MatTableDataSource<Place>(items)
+  dataSource = new MatTableDataSource<Place>(this.places)
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor() { }
@@ -38,7 +38,7 @@ export class UlvPlacesComponent implements OnInit, AfterViewInit {
 
   public getValues(value: string): void {
     this.placeName = value["name"];
-    this.tableIndex = items.findIndex(x => x.name == value["name"])
+    this.tableIndex = this.places.findIndex(x => x.name == value["name"])
     this.rowSelected = this.tableIndex;
     value["name"] = this.placeName;
   }
@@ -48,14 +48,19 @@ export class UlvPlacesComponent implements OnInit, AfterViewInit {
       return
     }
     const newItem = {name: this.placeName};
-    items.push(newItem);
-    this.dataSource.data = items;
+    this.places.push(newItem);
+    this.dataSource.data = this.places;
     this.placeName = "";
 
   }
 
   public editTableRow(): void {
-    items[this.tableIndex].name = this.placeName
+    this.places[this.tableIndex].name = this.placeName
     this.rowSelected = null;
+  }
+
+  public deletePlace(element: string): void {
+    this.places.splice(this.places.findIndex(x => x.name == element["name"]), 1)
+    this.dataSource._updateChangeSubscription()
   }
 }
