@@ -1,6 +1,8 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 import { HelperService } from '../helper.service';
 
 export interface Item {
@@ -25,28 +27,35 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   public tableIndex: number;
   public edit: boolean;
   public rowSelected: number;
-  dataSource = new MatTableDataSource<Item>(this.helper.items[0])
+  dataSource = new MatTableDataSource<Item>([])
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private helper: HelperService) { 
+  constructor(private http: HttpClient) {}
 
-  }
-  
   ngOnInit(): void {
-    
+      
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator
+    this.fetchItems().subscribe((items) => {
+      this.dataSource.data = items;
+    });
+  }
 
+  public fetchItems(): Observable<Item[]> {
+    return this.http.get<Item[]>('https://ulv-api.fly.dev/v1/items', {
+      headers: new HttpHeaders({
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+      })
+    });
   }
 
   public getValues(value: string): void {
     this.itemType = value["name"];
     this.itemAmount = value["amount"];
     this.itemPlace = value["place"];
-    for (let i = 0; i < this.helper.items[0].length; i++) {
-      if (this.helper.items[0][i].name == value["name"]) {
+    for (let i = 0; i < this.dataSource.data.length; i++) {
+      if (this.dataSource.data[i].name == value["name"]) {
         this.tableIndex = i;
         break;
       }
@@ -79,9 +88,9 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
 
   public editTableRow(): void {
     console.log(this.tableIndex)
-    this.helper.items[0][this.tableIndex]["name"] = this.itemType
-    this.helper.items[0][this.tableIndex]["amount"] = this.itemAmount
-    this.helper.items[0][this.tableIndex]["place"] = this.itemPlace
+    this.dataSource.data[0][this.tableIndex]["name"] = this.itemType
+    this.dataSource.data[0][this.tableIndex]["amount"] = this.itemAmount
+    this.dataSource.data[0][this.tableIndex]["place"] = this.itemPlace
     this.rowSelected = null;
   }
 
