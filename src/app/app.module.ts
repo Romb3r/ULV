@@ -22,6 +22,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTabsModule } from '@angular/material/tabs'
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     HttpClientModule
   ],
-  providers: [UlvPlacesComponent, UlvBodyComponent],
+  providers: [UlvPlacesComponent, UlvBodyComponent, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
