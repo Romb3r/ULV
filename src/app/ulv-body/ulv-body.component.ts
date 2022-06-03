@@ -27,7 +27,7 @@ export interface Place {
   styleUrls: ['./ulv-body.component.scss']
 })
 export class UlvBodyComponent implements OnInit, AfterViewInit {
-  public tableHeaders: string[] = ["name", "amount", "place", "expireDate", " "];
+  public tableHeaders: string[] = ["name", "amount", "place", "expireDate", "deleteItemBtn"];
   public places: Place[] = [];
   public items: any[] = []
   public itemType: string = "";
@@ -47,10 +47,7 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.fetchItems().subscribe((items) => {
-      items = items.map((item) => ({ ...item, expireAt: Intl.DateTimeFormat('de-DE').format(new Date(item.expireAt)) }))
-      this.dataSource.data = items;
-    });
+    this.updateTable()
     this.fetchPlaces().subscribe((places) => {
       this.places = places;
     });
@@ -82,7 +79,12 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
       this.itemPlace = value["place"];
       this.itemPlaceDisplay = this.places[index]
     }
-    catch {}
+    catch {
+      this.itemType = value["name"];
+      this.itemAmount = value["amount"];
+      this.itemExpireDate = value["expireAt"];
+      this.itemPlace = value["place"];
+    }
     for (let i = 0; i < this.dataSource.data.length; i++) {
       if (this.dataSource.data[i].name == value["name"]) {
         this.tableIndex = i;
@@ -101,12 +103,11 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
     let formattedDate = this.datepipe.transform(date, "YYYY-MM-dd")
     let displayDate = Intl.DateTimeFormat('de-DE').format(date);
     const newItem = {name: this.itemType, amount: Number(this.itemAmount), expireAt: formattedDate, place: {uuid: this.itemPlace["uuid"]}};
-    this.dataSource.data.push({name: this.itemType, amount: Number(this.itemAmount), expireAt: displayDate, place: this.itemPlace});
-    this.dataSource._updateChangeSubscription()
     this.itemType = "";
     this.itemAmount = null;
     this.itemPlace = "";
     await this.helper.postItem(newItem)
+    this.updateTable()
   }
 
   public changeClient(value: string): void {
@@ -126,7 +127,16 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   public async deleteItem(element: string) {
     let index = this.dataSource.data.findIndex(x => x.name == element["name"])
     await this.helper.deleteItem(this.dataSource.data[index]["uuid"])
-    this.dataSource.data.splice(index, 1)
-    this.dataSource._updateChangeSubscription()
+    this.updateTable()
+  }
+
+  public updateTable() {
+    this.fetchItems().subscribe((items) => {
+      items = items.map((item) => ({ ...item, expireAt: Intl.DateTimeFormat('de-DE').format(new Date(item.expireAt)) }))
+      items = items.filter((item) => {
+        return item.amount != 0;
+      })
+      this.dataSource.data = items;
+    });
   }
 }

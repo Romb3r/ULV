@@ -75,4 +75,31 @@ export class HelperService {
     })
     .toPromise()
   }
+
+  public patchCartItem(patchData: object, uuid: string) {
+    return this.http.patch('https://ulv-api.fly.dev/v1/cart-items/' + uuid, patchData, {
+      headers: new HttpHeaders({
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+      })
+    })
+    .toPromise()
+  }
+
+  public deleteCartItem(uuid: string) {
+    return this.http.delete('https://ulv-api.fly.dev/v1/cart-items/' + uuid, {
+      headers: new HttpHeaders({
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+      })
+    })
+    .toPromise()
+  }
+
+  public putCartItem(uuid: string) {
+    return this.http.put('https://ulv-api.fly.dev/v1/cart-items/' + uuid + '/shopped', {
+      headers: new HttpHeaders({
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+      })
+    })
+    .toPromise()  
+  }
 }

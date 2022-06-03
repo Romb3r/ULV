@@ -17,7 +17,7 @@ export interface Place {
 })
 export class UlvPlacesComponent implements OnInit, AfterViewInit {
   public places: Place[] = []
-  public tableHeaders: string[] = ["place", " "];
+  public tableHeaders: string[] = ["place", "stored", "deletePlaceBtn"];
   public placeName: string = "";
   public placeUuid: string = "";
   public tableIndex: number;
@@ -32,9 +32,7 @@ export class UlvPlacesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.fetchPlaces().subscribe((places) => {
-      this.dataSource.data = places;
-    });
+    this.updateTable()
     this.dataSource.paginator = this.paginator
     
   }
@@ -66,9 +64,8 @@ export class UlvPlacesComponent implements OnInit, AfterViewInit {
     }
     let postBody = {name: this.placeName}
     await this.helper.postPlace(postBody)
+    this.updateTable()
     this.places.push(postBody);
-    this.dataSource.data.push(postBody);
-    this.dataSource._updateChangeSubscription();
     this.placeName = "";
   }
 
@@ -82,7 +79,12 @@ export class UlvPlacesComponent implements OnInit, AfterViewInit {
   public async deletePlace(element: string) {
     let index = this.dataSource.data.findIndex(x => x.name == element["name"])
     await this.helper.deletePlace(this.dataSource.data[index]["uuid"])
-    this.dataSource.data.splice(index, 1)
-    this.dataSource._updateChangeSubscription()
+    this.updateTable()
+  }
+
+  public updateTable() {
+    this.fetchPlaces().subscribe((places) => {
+      this.dataSource.data = places;
+    });
   }
 }
