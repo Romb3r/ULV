@@ -66,4 +66,13 @@ export class HelperService {
     })
     .toPromise()
   }
+
+  public postCartItem(postData: object) {
+    return this.http.post('https://ulv-api.fly.dev/v1/cart-items', postData, {
+      headers: new HttpHeaders({
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+      })
+    })
+    .toPromise()
+  }
 }
