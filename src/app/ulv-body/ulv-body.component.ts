@@ -4,7 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { HelperService } from '../helper.service';
-import { DatePipe } from '@angular/common';
 
 export interface Item {
   name: string,
@@ -32,21 +31,23 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   public items: any[] = []
   public itemType: string = "";
   public itemAmount: number;
-  public itemPlace = "";
-  public itemExpireDate = "";
+  public itemPlace: string = "";
+  public itemPlaceDisplay: object;
+  public itemExpireDate: string = "";
   public tableIndex: number;
   public edit: boolean;
   public rowSelected: number;
   dataSource = new MatTableDataSource<Item>([])
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private http: HttpClient, private helper: HelperService, private datepipe: DatePipe) {}
+  constructor(private http: HttpClient, private helper: HelperService) {}
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit(): void {
     this.fetchItems().subscribe((items) => {
+      items = items.map((item) => ({ ...item, expireAt: Intl.DateTimeFormat('de-DE').format(new Date(item.expireAt)) }))
       this.dataSource.data = items;
     });
     this.fetchPlaces().subscribe((places) => {
@@ -71,15 +72,13 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public getValues(value: string): void {
-    try {
-      this.itemType = value["name"];
-      this.itemAmount = value["amount"];
-      this.itemExpireDate = value["expireAt"];
-      this.itemPlace = value["place"];
-    }
-    catch {
-    }
+  public getValues(value: object): void {
+    let index = this.places.findIndex(x => x.name == value["place"]["name"])
+    this.itemType = value["name"];
+    this.itemAmount = value["amount"];
+    this.itemExpireDate = value["expireAt"];
+    this.itemPlace = value["place"];
+    this.itemPlaceDisplay = this.places[index]
     for (let i = 0; i < this.dataSource.data.length; i++) {
       if (this.dataSource.data[i].name == value["name"]) {
         this.tableIndex = i;
@@ -96,8 +95,7 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
     let today = new Date();
     // current date + weeks * days
     today.setDate(today.getDate() + 2 * 7);
-    let formattedDate = this.datepipe.transform(today, 'YYYY-MM-dd HH:MM:00.000')
-    console.log(formattedDate)
+    let formattedDate = Intl.DateTimeFormat('de-DE').format(today);
     const newItem = {name: this.itemType, amount: Number(this.itemAmount), expireAt: formattedDate, place: {uuid: this.itemPlace["uuid"]}};
     this.dataSource.data.push({name: this.itemType, amount: Number(this.itemAmount), expireAt: formattedDate, place: this.itemPlace});
     this.dataSource._updateChangeSubscription()
@@ -116,7 +114,7 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
     this.dataSource.data[this.tableIndex]["amount"] = this.itemAmount
     this.dataSource.data[this.tableIndex]["place"] = this.itemPlace
     let postBody = {name: this.dataSource.data[this.tableIndex]["name"], amount: Number(this.dataSource.data[this.tableIndex]["amount"]),
-                expireAt: this.itemExpireDate, place: {uuid: this.itemPlace["uuid"]}}
+                    place: {uuid: this.itemPlace["uuid"]}}
     await this.helper.patchItem(postBody, this.dataSource.data[this.tableIndex]["uuid"])
     this.rowSelected = null;
   }
@@ -126,6 +124,5 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
     await this.helper.deleteItem(this.dataSource.data[index]["uuid"])
     this.dataSource.data.splice(index, 1)
     this.dataSource._updateChangeSubscription()
-    
   }
 }

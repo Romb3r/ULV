@@ -48,7 +48,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline" class="itemInput">
                 <mat-label> Place </mat-label>
-                <mat-select (selectionChange)="changeClient($event.value)" [(ngModel)]="itemPlace">
+                <mat-select (selectionChange)="changeClient($event.value)" [(ngModel)]="itemPlaceDisplay">
                     <mat-option *ngFor="let place of places" [value]="place">{{place["name"]}}</mat-option>
                 </mat-select>
             </mat-form-field>
