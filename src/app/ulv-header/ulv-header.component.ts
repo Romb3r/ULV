@@ -9,6 +9,9 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 })
 export class UlvHeaderComponent implements OnInit {
   public title: string = "";
+  public itemsSelected: boolean = true;
+  public placesSelected: boolean = false;
+  public cartSelected: boolean = false;
   constructor(private location: Location) {
   }
 
@@ -20,6 +23,19 @@ export class UlvHeaderComponent implements OnInit {
   }
 
   changeRoute(route: string) {
+    if (route == "") {
+      this.itemsSelected = true;
+      this.placesSelected = false;
+      this.cartSelected = false;
+    } else if (route == "places") {
+      this.itemsSelected = false;
+      this.placesSelected = true;
+      this.cartSelected = false;
+    } else if (route == "cart") {
+      this.itemsSelected = false;
+      this.placesSelected = false;
+      this.cartSelected = true;
+    }
     this.location.replaceState(route)
   }
 }

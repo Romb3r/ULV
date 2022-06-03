@@ -1,0 +1,63 @@
+.demo-table {
+    width: 100%;
+  }
+
+th {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+td {
+    cursor: pointer;
+}
+
+.itemInput {
+    width: 100%;
+}
+
+.container-all {
+    width: 100%;
+}
+
+.container-left {
+    width: calc(70% - 8px);
+    margin: 4px;
+    float: left;
+}
+
+.container-right {
+    width: calc(30% - 8px);
+    margin: 4px;
+    float: right;
+}
+
+.bottomButtonLeft {
+    background-color: #dff0d8;
+    width: calc(50% - 8px);
+    float: left;
+}
+
+.bottomButtonRight {
+    background-color: #dff0d8;
+    width: calc(50% - 8px);
+    float: right; 
+}
+
+.inputFields {
+    display: inline-block;
+}
+
+.selected {
+    background-color: #dff0d8;
+}
+
+.addDelBtn {
+    width: 150px;
+}
+
+.mat-column-addbtn {
+    width: 32px;
+    text-align: center;
+    padding-right: 24px;
+    padding-left: 100px;
+}

@@ -1,0 +1,11 @@
+# Ignore all
+*
+
+# Whitelist
+!src
+!.browserlistrc
+!angular.json
+!karma.conf.js
+!package*
+!tsconfig*
+!nginx.conf

@@ -30,3 +30,31 @@ td {
     margin: 4px;
     float: right;
 }
+
+.bottomButtonLeft {
+    background-color: #dff0d8;
+    width: calc(50% - 8px);
+    float: left;
+}
+
+.bottomButtonRight {
+    background-color: #dff0d8;
+    width: calc(50% - 8px);
+    float: right; 
+}
+
+.inputFields {
+    display: inline-block;
+}
+
+.selected {
+    background-color: #dff0d8;
+}
+
+.deleteItemBtn {
+    width: 150px;
+}
+
+.mat-column-deleteItemBtn {
+    text-align: center;
+}
