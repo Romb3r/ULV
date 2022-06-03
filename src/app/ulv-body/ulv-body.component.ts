@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 import { HelperService } from '../helper.service';
+import { DatePipe } from '@angular/common';
 
 export interface Item {
   name: string,
@@ -40,7 +41,7 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Item>([])
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private http: HttpClient, private helper: HelperService) {}
+  constructor(private http: HttpClient, private helper: HelperService, private datepipe: DatePipe) {}
 
   ngOnInit(): void {
   }
@@ -73,12 +74,15 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   }
 
   public getValues(value: object): void {
-    let index = this.places.findIndex(x => x.name == value["place"]["name"])
-    this.itemType = value["name"];
-    this.itemAmount = value["amount"];
-    this.itemExpireDate = value["expireAt"];
-    this.itemPlace = value["place"];
-    this.itemPlaceDisplay = this.places[index]
+    try {
+      let index = this.places.findIndex(x => x.name == value["place"]["name"])
+      this.itemType = value["name"];
+      this.itemAmount = value["amount"];
+      this.itemExpireDate = value["expireAt"];
+      this.itemPlace = value["place"];
+      this.itemPlaceDisplay = this.places[index]
+    }
+    catch {}
     for (let i = 0; i < this.dataSource.data.length; i++) {
       if (this.dataSource.data[i].name == value["name"]) {
         this.tableIndex = i;
@@ -92,12 +96,12 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
     if (this.itemType == "" || this.itemAmount == null || this.itemPlace["name"] == "") {
       return
     }
-    let today = new Date();
-    // current date + weeks * days
-    today.setDate(today.getDate() + 2 * 7);
-    let formattedDate = Intl.DateTimeFormat('de-DE').format(today);
+    let date = new Date();
+    date.setDate(date.getDate() + 2 * 7);
+    let formattedDate = this.datepipe.transform(date, "YYYY-MM-dd")
+    let displayDate = Intl.DateTimeFormat('de-DE').format(date);
     const newItem = {name: this.itemType, amount: Number(this.itemAmount), expireAt: formattedDate, place: {uuid: this.itemPlace["uuid"]}};
-    this.dataSource.data.push({name: this.itemType, amount: Number(this.itemAmount), expireAt: formattedDate, place: this.itemPlace});
+    this.dataSource.data.push({name: this.itemType, amount: Number(this.itemAmount), expireAt: displayDate, place: this.itemPlace});
     this.dataSource._updateChangeSubscription()
     this.itemType = "";
     this.itemAmount = null;
