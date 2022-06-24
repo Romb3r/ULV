@@ -44,7 +44,8 @@ export class UlvCartComponent implements OnInit, AfterViewInit {
   public fetchCartItems(): Observable<Item[]> {
     return this.http.get<Item[]>('https://ulv-api.fly.dev/v1/cart-items', {
       headers: new HttpHeaders({
-        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil"),
+        "Code": this.helper.code
       })
     });
   }

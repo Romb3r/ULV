@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { HelperService } from '../helper.service';
 
 @Component({
   selector: 'app-ulv-header',
@@ -12,7 +13,7 @@ export class UlvHeaderComponent implements OnInit {
   public itemsSelected: boolean = true;
   public placesSelected: boolean = false;
   public cartSelected: boolean = false;
-  constructor(private location: Location) {
+  constructor(private location: Location, public helper: HelperService) {
   }
 
   ngOnInit(): void {
