@@ -9,6 +9,7 @@ import { UlvHeaderComponent } from './ulv-header/ulv-header.component';
 import { UlvBodyComponent } from './ulv-body/ulv-body.component';
 import { UlvPlacesComponent } from './ulv-places/ulv-places.component';
 import { UlvCartComponent } from './ulv-cart/ulv-cart.component';
+import { UlvLoginComponent } from './ulv-login/ulv-login.component';
 
 // Material Design
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -23,6 +24,8 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
+import { MatDialogModule } from '@angular/material/dialog';
+import { UlvDialogComponent } from './ulv-dialog/ulv-dialog.component'
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { DatePipe } from '@angular/common';
     UlvHeaderComponent,
     UlvBodyComponent,
     UlvPlacesComponent,
-    UlvCartComponent
+    UlvCartComponent,
+    UlvLoginComponent,
+    UlvDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +52,7 @@ import { DatePipe } from '@angular/common';
     MatPaginatorModule,
     MatTabsModule,
     MatButtonModule,
+    MatDialogModule,
     HttpClientModule
   ],
   providers: [UlvPlacesComponent, UlvBodyComponent, DatePipe],

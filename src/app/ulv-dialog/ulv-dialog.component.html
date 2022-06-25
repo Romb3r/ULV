@@ -1,0 +1,14 @@
+<div class="container-all">
+    <div class="container-left">
+        <mat-form-field appearance="standard">
+            <mat-label> Code eingeben </mat-label>
+            <input matInput [(ngModel)]="this.helper.code">
+        </mat-form-field>
+    </div>
+    <div class="container-right">
+        <button mat-raised-button (click)="login()" class="BtnLogin">
+            Login
+        </button>
+    </div>
+</div>
+

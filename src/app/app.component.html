@@ -1,9 +1,12 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-<app-ulv-header>
+<app-ulv-login *ngIf="checkURL() == '/'">
+</app-ulv-login>
+
+<app-ulv-header *ngIf="checkURL() != '/'">
 </app-ulv-header>
 
-<app-ulv-body *ngIf="checkURL() == '/'">
+<app-ulv-body *ngIf="checkURL() == '/items'">
 </app-ulv-body>
 
 <app-ulv-places *ngIf="checkURL() == '/places'">

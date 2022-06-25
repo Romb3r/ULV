@@ -1,7 +1,7 @@
 <mat-toolbar class="toolbar">
     <mat-toolbar-row class="toolbarRow">
         <div class="buttons">
-            <button mat-raised-button class="switchButton" [ngClass]="{'selected': itemsSelected}" (click)="changeRoute('')">Items
+            <button mat-raised-button class="switchButton" [ngClass]="{'selected': itemsSelected}" (click)="changeRoute('items')">Items
                 <mat-icon>fastfood</mat-icon>
             </button>
             <button mat-raised-button class="switchButton" [ngClass]="{'selected': placesSelected}" (click)="changeRoute('places')">Places
@@ -10,12 +10,6 @@
             <button mat-raised-button class="switchButton" [ngClass]="{'selected': cartSelected}" (click)="changeRoute('cart')">Cart
                 <mat-icon>add_shopping_cart</mat-icon>
             </button>
-        </div>
-        <div class="inputField">
-            <mat-form-field appearance="standard" class="codeInput">
-                <mat-label> Code </mat-label>
-                <input matInput [(ngModel)]="this.helper.code">
-            </mat-form-field>
         </div>
     </mat-toolbar-row>
 </mat-toolbar>
