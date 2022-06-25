@@ -24,7 +24,11 @@ export class UlvHeaderComponent implements OnInit {
   }
 
   changeRoute(route: string) {
-    if (route == "") {
+    if ( route == "") {
+      this.itemsSelected = false;
+      this.placesSelected = false;
+      this.cartSelected = false;
+    } else if (route == "items") {
       this.itemsSelected = true;
       this.placesSelected = false;
       this.cartSelected = false;

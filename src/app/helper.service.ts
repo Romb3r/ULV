@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse , HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +8,7 @@ import { HttpClient, HttpResponse , HttpHeaders} from '@angular/common/http';
 export class HelperService {
   public code: string = "";
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   public postItem(postData: object) {
     console.log(this.code)

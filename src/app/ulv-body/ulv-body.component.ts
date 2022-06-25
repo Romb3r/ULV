@@ -44,6 +44,7 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   constructor(private http: HttpClient, private helper: HelperService, private datepipe: DatePipe) {}
 
   ngOnInit(): void {
+    console.log(this.helper.code)
   }
 
   ngAfterViewInit(): void {
@@ -103,11 +104,9 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
     let date = new Date();
     date.setDate(date.getDate() + 2 * 7);
     let formattedDate = this.datepipe.transform(date, "YYYY-MM-dd")
-    let displayDate = Intl.DateTimeFormat('de-DE').format(date);
     const newItem = {name: this.itemType, amount: Number(this.itemAmount), expireAt: formattedDate, place: {uuid: this.itemPlace["uuid"]}};
     this.itemType = "";
     this.itemAmount = null;
-    this.itemPlace = "";
     await this.helper.postItem(newItem)
     this.updateTable()
   }

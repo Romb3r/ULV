@@ -1,0 +1,21 @@
+.container-all {
+    width: 100%;
+}
+
+.container-left {
+    width: calc(70% - 8px);
+    margin: 4px;
+    float: left;
+}
+
+.container-right {
+    width: calc(30% - 8px);
+    margin: 4px;
+    float: right;
+}
+
+
+.BtnLogin {
+    top: 20px;
+    background-color: #b9e4a9;
+}
