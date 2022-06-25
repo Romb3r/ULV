@@ -13,7 +13,7 @@
             <ng-container matColumnDef="addbtn">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                    <button  mat-raised-button (click)="addToItems(element)" class="addDelBtn">
+                    <button  mat-raised-button (click)="addToItems(element)" class="addBtn">
                         Add to items
                     </button>
                 </td>
@@ -21,7 +21,7 @@
             <ng-container matColumnDef=" ">
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                    <button  mat-raised-button (click)="deleteCartItem(element)" class="addDelBtn">
+                    <button  mat-raised-button (click)="deleteCartItem(element)" class="delBtn">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </td>

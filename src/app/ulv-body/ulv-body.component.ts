@@ -57,7 +57,8 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   public fetchItems(): Observable<Item[]> {
     return this.http.get<Item[]>('https://ulv-api.fly.dev/v1/items', {
       headers: new HttpHeaders({
-        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil"),
+        "X-Group-Key": this.helper.code
       })
     });
   }
@@ -65,7 +66,8 @@ export class UlvBodyComponent implements OnInit, AfterViewInit {
   public fetchPlaces(): Observable<Place[]> {
     return this.http.get<Place[]>('https://ulv-api.fly.dev/v1/places', {
       headers: new HttpHeaders({
-        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil"),
+        "X-Group-Key": this.helper.code
       })
     });
   }
