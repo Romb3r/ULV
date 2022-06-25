@@ -40,7 +40,8 @@ export class UlvPlacesComponent implements OnInit, AfterViewInit {
   public fetchPlaces(): Observable<Place[]> {
     return this.http.get<Place[]>('https://ulv-api.fly.dev/v1/places', {
       headers: new HttpHeaders({
-        "Authorization": "Basic " + btoa("ulv:ulvistgeil")
+        "Authorization": "Basic " + btoa("ulv:ulvistgeil"),
+        "X-Group-Key": this.helper.code
       })
     });
   }
