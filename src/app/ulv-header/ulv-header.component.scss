@@ -1,5 +1,19 @@
 .toolbar {
     background-color: #dff0d8;
+
+    .toolbarRow{
+        display: grid;
+        grid-template-columns: 1fr 20px;
+        grid-template-areas: 'Buttons Field';
+    
+        .buttons {
+            grid-area: 'Buttons';
+        }
+    
+        .inputField {
+            grid-area: 'Field'
+        }
+    }
 }
 
 .selected {
@@ -8,11 +22,18 @@
 
 .switchButton {
     width: 150px;
-    margin: 3px;    
+    margin: 3px; 
+    top: -9px;   
 }
 
 .title {
     font-size: xx-large;
     width: 50%;
     text-align: center;
+}
+
+.codeInput {
+    float: right;
+    top: -2px;
+    right: 5px
 }
